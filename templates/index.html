@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>首页</title>
+</head>
+
+<script type="text/javascript" src="../statics/js/jquery-1.12.4.min.js"></script>
+
+
+<script type="text/javascript">
+    function del(id){
+        $.ajax({
+            type: "post",
+            url: "/del",
+            data: { id: id},
+            success: function (json) {
+                if(json.message == "OK"){
+                    alert("删除成功");
+                    location.href = "/";
+                }
+                else {
+                    alert("删除失败");
+                }
+            },
+            error: function () {
+                alert("删除失败");
+            }
+        })
+    }
+</script>
+
+
+<body>
+<table border="2">
+    <tbody>
+    <tr>
+        <td>Id</td>
+        <td>文件名</td>
+        <td>创建时间</td>
+        <td>下载</td>
+        <td>删除</td>
+    </tr>
+        {{ range . }}
+            <tr>
+                <td>{{ .ID}}</td>
+                <td>{{ .Name}}</td>
+                <td>{{ .CreatedAt}}</td>
+                <td><a href="{{ .Address}}">下载</a></td>
+                <td><button id="{{ .ID}}" onclick="del(this.id)">删除</button></td>
+            </tr>
+        {{ end }}
+    </tbody>
+</table>
+<center><a href="http://beian.miit.gov.cn/" target="_blank"> 闽ICP备2020019919号</a></center>
+</body>
+</html>
